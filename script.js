@@ -182,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <small>${formatCurrency(it.price)} x ${
         it.qty
       } = ${formatCurrency(sub)}</small>
-                    ${it.note ? <small>Catatan: ${it.note}</small> : ""}
+                    ${it.note ? `<small>Catatan: ${it.note}</small>` : ""}
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
                     <div class="qty-controls">
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
     q("#qtyInput").value = Math.max(1, Number(q("#qtyInput").value || 1) - 1);
   });
 
-    // ==========================
+  // ==========================
   // Tambahan fitur baru 1b
   // ==========================
   let discount = 0; // nilai diskon
