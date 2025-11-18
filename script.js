@@ -556,4 +556,131 @@ document.addEventListener("DOMContentLoaded", function () {
     delete cart[id];
     updateCartUI();
   }
-})
+
+  // Open/close sidebar
+  function openCart() {
+    cartSidebar.classList.add("open");
+    cartSidebar.setAttribute("aria-hidden", "false");
+  }
+  function closeCart() {
+    cartSidebar.classList.remove("open");
+    cartSidebar.setAttribute("aria-hidden", "true");
+  }
+
+  floatingCart.addEventListener("click", openCart);
+  q("#closeCart").addEventListener("click", closeCart);
+
+  // Add-to-cart modal logic
+  const addModalEl = q("#addModal");
+  const addModal = new bootstrap.Modal(addModalEl, {
+    backdrop: "static",
+    keyboard: true,
+  });
+  let currentItem = null;
+  qa(".add-btn").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const id = this.dataset.id;
+      const name = this.dataset.name;
+      const price = parseFloat(this.dataset.price);
+      const img = this.dataset.img;
+      currentItem = { id, name, price, img };
+      q("#addModalTitle").textContent = name;
+      q("#addPreview").src = img;
+      q("#addModalDesc").textContent =
+        this.closest(".menu-content").querySelector(".menu-desc").textContent ||
+        "";
+      q("#modalPrice").textContent = formatCurrency(price);
+      q("#qtyInput").value = 1;
+      addModal.show();
+    });
+  });
+
+  q("#qtyPlus").addEventListener("click", () => {
+    q("#qtyInput").value = Number(q("#qtyInput").value || 1) + 1;
+  });
+  q("#qtyMinus").addEventListener("click", () => {
+    q("#qtyInput").value = Math.max(1, Number(q("#qtyInput").value || 1) - 1);
+  });
+
+  q("#addToCartBtn").addEventListener("click", function () {
+    const qty = Number(q("#qtyInput").value || 1);
+    if (!currentItem) return;
+    if (cart[currentItem.id]) cart[currentItem.id].qty += qty;
+    else cart[currentItem.id] = { ...currentItem, qty };
+    addModal.hide();
+    updateCartUI();
+    // show notification (reuse function if in your script.js, else simple alert)
+    if (typeof showNotification === "function")
+      showNotification("Item added to cart", "success");
+    else console.log("Added to cart:", currentItem.name, "x", qty);
+  });
+
+  // Checkout simple flow
+  q("#checkoutBtn").addEventListener("click", function () {
+    const keys = Object.keys(cart);
+    if (keys.length === 0) {
+      if (typeof showNotification === "function")
+        showNotification("Keranjang kosong", "error");
+      else alert("Keranjang kosong");
+      return;
+    }
+    // Build summary
+    let summary = "Order Summary:\\n";
+    let total = 0;
+    keys.forEach((k) => {
+      const it = cart[k];
+      summary += `${it.name} x ${it.qty} = ${formatCurrency(
+        it.price * it.qty
+      )}\\n`;
+      total += it.price * it.qty;
+    });
+    summary += "\\nTotal: " + formatCurrency(total);
+    // For now just show prompt & clear cart on confirm (real app would send to backend)
+    if (confirm(summary + "\\n\\nKonfirmasi checkout?")) {
+      // simulate checkout success
+      if (typeof showNotification === "function")
+        showNotification("Checkout sukses — terima kasih!", "success");
+      else alert("Checkout sukses — terima kasih!");
+      // reset cart
+      for (const k of Object.keys(cart)) delete cart[k];
+      updateCartUI();
+      closeCart();
+    }
+  });
+
+  // Initial render
+  updateCartUI();
+
+  // Menu category filter (if your original script has this, this will complement it)
+  qa(".category-btn").forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const cat = this.dataset.category || "all";
+      qa(".category-btn").forEach((b) => b.classList.remove("active"));
+      this.classList.add("active");
+      qa(".menu-item").forEach((item) => {
+        const icat = item.dataset.category || "";
+        if (cat === "all" || icat === cat) {
+          item.style.display = "block";
+          item.style.opacity = "1";
+        } else {
+          item.style.display = "none";
+          item.style.opacity = "0";
+        }
+      });
+    });
+  });
+
+  // Accessibility: close sidebar on ESC
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeCart();
+      if (addModal) addModal.hide();
+    }
+  });
+
+  // If you have active nav script in script.js it will keep working
+
+  
+});
+
+console.log("Testimonial page loaded");
