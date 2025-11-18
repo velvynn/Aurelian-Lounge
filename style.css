@@ -12,7 +12,7 @@
   --muted: #6c757d;
   --text: #1f2d2b;
   --light: #ffffff;
-  --accent: #d4af37;
+  --accent: #ffc400ff;
   --card-shadow: 0 8px 24px rgba(15, 21, 14, 0.08);
   --radius: 12px;
   --transition: 0.28s ease;
@@ -61,6 +61,30 @@ body {
   letter-spacing: 1px;
   font-weight: 700;
 }
+
+/* Brand + logo styling */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;                 /* jarak logo dan teks */
+  font-family: "Playfair Display", serif;
+}
+
+/* Ukuran logo */
+.brand-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Saat header sudah scroll (warna hijau gelap), logo ikut berubah biar terlihat) */
+.header.scrolled .brand-logo {
+  filter: brightness(0) invert(1);  /* jadi putih */
+  opacity: 0.95;
+}
+
+
 .navbar .nav-link {
   color: rgba(255, 255, 255, 0.9);
   margin-left: 10px;
@@ -96,8 +120,9 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  min-height:100vh;
+  height: auto;
   background-image: url("img/img15.jpg");
   background-size: cover;
   background-position: center;
@@ -131,7 +156,7 @@ body {
 .btn-book {
   display: inline-block;
   padding: 10px 25px;
-  background: #d4a373;
+  background: #0b3b2e;
   color: #fff;
   text-decoration: none;
   border-radius: 6px;
@@ -143,13 +168,12 @@ body {
   z-index: 10 !important;   /* pastikan gambar di atas overlay */
 }
 
-
 /* Hero image slider */
 .hero-image {
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 0;
+  overflow: visible;
   box-shadow: var(--card-shadow);
-  height: 320px;
+  height: 390px;
 }
 .image-slider {
   position: relative;
@@ -166,9 +190,14 @@ body {
   opacity: 1;
 }
 .slide img {
-  width: 100%;
-  height: 100%;
+  width: 400px;
+  max-width: 390px;
+  aspect-ratio: 1/1;    /* memastikan bentuk persegi */
   object-fit: cover;
+  border-radius: 100%;    /* hasilnya bulat sempurna */
+  margin-left: 60px;
+  margin-top: 20px;
+
 }
 
 /* Section header */
@@ -689,4 +718,12 @@ body {
   .cart-sidebar.open {
     right: 0;
   }
+  @keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 }
