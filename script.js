@@ -230,6 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // If you have active nav script in script.js it will keep working
+  
 });
 
 console.log("Testimonial page loaded");
+
