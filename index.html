@@ -26,5 +26,480 @@
     <!-- My stylesheet (your existing CSS) -->
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body></body>
-</html>
+  <body>
+    <!-- Header & Navigation membuat header navigasi yang responsif di website restora -->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="#home">Aurelian Lounge</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+              <li class="nav-item">
+                <a class="nav-link active" href="#home">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#service">Service</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#menu">Menu</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="pagesDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  >Pages</a
+                >
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#booking">Booking</a></li>
+                  <li><a class="dropdown-item" href="#team">Our Team</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#testimonials"
+                      >Testimonial</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+              <li class="nav-item ms-lg-2">
+                <a class="nav-link btn-book" href="#booking">Book a Table</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+  <!-- Hero Section -->
+<section id="home" class="hero">
+  <!-- existing hero-bg kept, plus select photo-overlay that only affects hero -->
+  <div class="hero-bg"></div>
+  <div class="hero-photo-overlay" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <h2>Where Every Flavor Tells a Story</h2>
+          <p>
+            Rasa, aroma, dan keindahan kami satukan dalam setiap sajian. Di
+            sini, makan bukan sekadar rutinitas, tapi seni sebuah pengalaman
+            yang menggugah jiwa dan membangkitkan kenangan.
+          </p>
+          <a href="#booking" class="btn-book">Book a Table</a>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="hero-image">
+          <div class="image-slider">
+            <div class="slide active">
+              <img
+                src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80"
+                alt="Delicious Food"
+              />
+            </div>
+            <div class="slide">
+              <img
+                src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80"
+                alt="Restaurant Interior"
+              />
+            </div>
+            <div class="slide">
+              <img
+                src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=900&q=80"
+                alt="Dessert"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+    <!-- Features / Services -->
+    <section id="service" class="features">
+      <div class="container">
+        <div class="section-header">
+          <span>What We Offer</span>
+          <h2>Our <span>Services</span></h2>
+        </div>
+
+        <div class="row gx-3">
+          <!-- service items (unchanged) -->
+          <div class="col-md-3">
+            <div
+              class="feature-item"
+              data-target="master-save"
+              tabindex="0"
+              role="button"
+              aria-pressed="false"
+            >
+              <div class="feature-icon"><i class="fas fa-user-tie"></i></div>
+              <h3 class="feature-title">Master Save</h3>
+              <p class="feature-desc">Chef ahli & resep spesial.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div
+              class="feature-item"
+              data-target="quality-food"
+              tabindex="0"
+              role="button"
+              aria-pressed="false"
+            >
+              <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+              <h3 class="feature-title">Quality Food</h3>
+              <p class="feature-desc">Bahan segar, citarasa premium.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div
+              class="feature-item"
+              data-target="online-order"
+              tabindex="0"
+              role="button"
+              aria-pressed="false"
+            >
+              <div class="feature-icon"><i class="fas fa-cart-plus"></i></div>
+              <h3 class="feature-title">Online Order</h3>
+              <p class="feature-desc">Pesan online cepat & aman.</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div
+              class="feature-item"
+              data-target="service-24"
+              tabindex="0"
+              role="button"
+              aria-pressed="false"
+            >
+              <div class="feature-icon"><i class="fas fa-headset"></i></div>
+              <h3 class="feature-title">24/7 Service</h3>
+              <p class="feature-desc">Siap melayani kapan saja.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- feature details (hidden by default) -->
+        <div class="feature-content mt-4">
+          <div id="master-save" class="feature-detail">
+            <h4>Master Save</h4>
+            <p>
+              Master Save menandakan chef kami yang berpengalaman dan resep
+              rahasia keluarga. Semua masakan diuji kualitasnya untuk memastikan
+              cita rasa terbaik.
+            </p>
+          </div>
+
+          <div id="quality-food" class="feature-detail">
+            <h4>Quality Food</h4>
+            <p>
+              Bahan-bahan segar dan proses seleksi ketat untuk menjaga kualitas,
+              nutrisi, dan rasa pada setiap menu yang disajikan.
+            </p>
+          </div>
+
+          <div id="online-order" class="feature-detail">
+            <h4>Online Order</h4>
+            <p>
+              Pemesanan online mudah lewat website atau aplikasi, packing aman,
+              dan layanan pengantaran cepat.
+            </p>
+          </div>
+
+          <div id="service-24" class="feature-detail">
+            <h4>24/7 Service</h4>
+            <p>
+              Layanan pelanggan dan reservasi kami buka sepanjang waktu untuk
+              bantu kebutuhanmu kapanpun.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="section-header">
+          <span>About Us</span>
+          <h2>
+            Welcome to
+            <i
+              class="fa-solid fa-utensils"
+              style="color: #d4af37; margin: 0 8px"
+            ></i>
+            <span>Aurelian lounge</span>
+          </h2>
+        </div>
+
+        <div class="row align-items-center about-layout">
+          <div class="col-lg-6">
+            <div
+              class="about-images d-flex flex-wrap gap-3 justify-content-center"
+            >
+              <img
+                class="about-img"
+                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=500&q=80"
+                alt="Interior"
+              />
+              <img
+                class="about-img"
+                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=500&q=80"
+                alt="Preparation"
+              />
+              <img
+                class="about-img"
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=500&q=80"
+                alt="Dining"
+              />
+              <img
+                class="about-img"
+                src="https://images.unsplash.com/photo-1577106263724-2c8e03bfe9cf?auto=format&fit=crop&w=500&q=80"
+                alt="Chef"
+              />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="about-content">
+              <p class="lead">
+                Kami menyajikan pengalaman bersantap yang hangat, ramah, dan
+                penuh citarasa. Restoran kami mengutamakan kualitas dan
+                pelayanan prima.
+              </p>
+
+              <p>
+                Dengan tim chef berpengalaman dan bahan pilihan, kami siap
+                memberi pengalaman makan yang tak terlupakan.
+              </p>
+
+              <div class="about-stats d-flex gap-4 mt-3">
+                <div class="stat-item text-center">
+                  <h4>8</h4>
+                  <p>Years of Experience</p>
+                </div>
+                <div class="stat-item text-center">
+                  <h4>26</h4>
+                  <p>Master Chefs</p>
+                </div>
+              </div>
+
+              <a href="#readmore" class="btn-read mt-3">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section (expanded to 12 items) -->
+    <section id="menu" class="menu">
+      <div class="container">
+        <div class="section-header">
+          <span>Food Menu</span>
+          <h2>Most Popular Items</h2>
+        </div>
+
+        <div class="menu-categories d-flex gap-2 justify-content-center mb-3">
+          <button class="category-btn active" data-category="all">All</button>
+          <button class="category-btn" data-category="breakfast">
+            Breakfast
+          </button>
+          <button class="category-btn" data-category="lunch">
+            Special Lunch
+          </button>
+          <button class="category-btn" data-category="dinner">
+            Lovely Dinner
+          </button>
+        </div>
+
+        <div class="menu-items">
+          <div class="row g-3">
+            <!-- 12 menu cards with data-price and add button -->
+            <!-- For brevity images reuse unsplash; prices set in data-price attribute (number in currency) -->
+            <!-- 1 -->
+            <div class="col-md-4 menu-item" data-category="breakfast">
+              <div class="menu-card position-relative">
+                <div class="menu-img">
+                  <img
+                    src="img/img4.jpg"
+                    alt="Breakfast Burger"
+                  />
+                </div>
+                <div class="menu-content">
+                  <div
+                    class="menu-title d-flex justify-content-between align-items-center"
+                  >
+                    <h5>Breakfast Burger</h5>
+                    <div class="price-wrap text-end">
+                      <div class="original">$16.25</div>
+                      <div class="discounted" data-price="12.99">$12.99</div>
+                    </div>
+                  </div>
+                  <p class="menu-desc">Bun segar, telur, keju, dan bacon.</p>
+                  <button
+                    class="btn btn-sm add-btn"
+                    data-id="m1"
+                    data-name="Breakfast Burger"
+                    data-price="12.99"
+                    data-img="https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=400&q=80"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- 2 -->
+            <div class="col-md-4 menu-item" data-category="breakfast">
+              <div class="menu-card position-relative">
+                <div class="menu-img">
+                  <img
+                    src="img/img5.jpg"
+                    alt="Pancakes"
+                  />
+                </div>
+                <div class="menu-content">
+                  <div
+                    class="menu-title d-flex justify-content-between align-items-center"
+                  >
+                    <h5>Fluffy Pancakes</h5>
+                    <div class="price-wrap text-end">
+                      <div class="original">$12.50</div>
+                      <div class="discounted" data-price="9.99">$9.99</div>
+                    </div>
+                  </div>
+                  <p class="menu-desc">
+                    Sajian pancakes dengan sirup maple dan buah segar.
+                  </p>
+                  <button
+                    class="btn btn-sm add-btn"
+                    data-id="m2"
+                    data-name="Fluffy Pancakes"
+                    data-price="9.99"
+                    data-img="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=400&q=80"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- 3 -->
+            <div class="col-md-4 menu-item" data-category="lunch">
+              <div class="menu-card position-relative">
+                <div class="menu-img">
+                  <img
+                    src="img/img6.jpg"
+                    alt="Pizza"
+                  />
+                </div>
+                <div class="menu-content">
+                  <div
+                    class="menu-title d-flex justify-content-between align-items-center"
+                  >
+                    <h5>Special Pizza</h5>
+                    <div class="price-wrap text-end">
+                      <div class="original">$22.35</div>
+                      <div class="discounted" data-price="18.99">$18.99</div>
+                    </div>
+                  </div>
+                  <p class="menu-desc">
+                    Thin crust dengan topping segar dan mozzarella.
+                  </p>
+                  <button
+                    class="btn btn-sm add-btn"
+                    data-id="m3"
+                    data-name="Special Pizza"
+                    data-price="18.99"
+                    data-img="https://www.chowhound.com/img/gallery/the-common-pizza-mistake-thatll-leave-you-with-soggy-dough/and-watch-your-tomatoes-1710449170.webp"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- 4 -->
+            <div class="col-md-4 menu-item" data-category="lunch">
+              <div class="menu-card position-relative">
+                <div class="menu-img">
+                  <img
+                    src="img/img7.jpg"
+                    alt="Pasta"
+                  />
+                </div>
+                <div class="menu-content">
+                  <div
+                    class="menu-title d-flex justify-content-between align-items-center"
+                  >
+                    <h5>Creamy Pasta</h5>
+                    <div class="price-wrap text-end">
+                      <div class="original">$17.50</div>
+                      <div class="discounted" data-price="14.99">$14.99</div>
+                    </div>
+                  </div>
+                  <p class="menu-desc">
+                    Pasta creamy dengan jamur dan bumbu herba.
+                  </p>
+                  <button
+                    class="btn btn-sm add-btn"
+                    data-id="m4"
+                    data-name="Creamy Pasta"
+                    data-price="14.99"
+                    data-img="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=400&q=80"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- 5 -->
+            <div class="col-md-4 menu-item" data-category="dinner">
+              <div class="menu-card position-relative">
+                <div class="menu-img">
+                  <img
+                    src="img/img8.jpg"
+                    alt="Steak"
+                  />
+                </div>
+                <div class="menu-content">
+                  <div
+                    class="menu-title d-flex justify-content-between align-items-center"
+                  >
+                    <h5>Grilled Steak</h5>
+                    <div class="price-wrap text-end">
+                      <div class="original">$29.99</div>
+                      <div class="discounted" data-price="24.99">$24.99</div>
+                    </div>
+                  </div>
+                  <p class="menu-desc">Steak juicy dengan sayuran panggang.</p>
+                  <button
+                    class="btn btn-sm add-btn"
+                    data-id="m5"
+                    data-name="Grilled Steak"
+                    data-price="24.99"
+                    data-img="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </div>
