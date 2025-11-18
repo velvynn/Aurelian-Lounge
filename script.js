@@ -281,4 +281,279 @@ document.addEventListener("DOMContentLoaded", function () {
     q("#qtyInput").value = Math.max(1, Number(q("#qtyInput").value || 1) - 1);
   });
 
+    // ==========================
+  // Tambahan fitur baru 1b
+  // ==========================
+  let discount = 0; // nilai diskon
+
+  // Terapkan promo kode
+  q("#applyPromo").addEventListener("click", () => {
+    const code = q("#promoCode").value.trim().toUpperCase();
+    if (code === "PROMO10") {
+      discount = 0.1; // 10% diskon
+      alert("Promo berhasil! Diskon 10% diterapkan.");
+    } else {
+      discount = 0;
+      alert("Kode promo tidak valid.");
+    }
+    updateCartUI();
+  });
+
+  // Tambah item ke cart dengan catatan
+  q("#addToCartBtn").addEventListener("click", function () {
+    const qty = Number(q("#qtyInput").value || 1);
+    if (!currentItem) return;
+    const note = q("#itemNote") ? q("#itemNote").value.trim() : "";
+    const itemKey = currentItem.id + (note ? "-" + note : ""); // beda jika catatan berbeda
+    if (cart[itemKey]) cart[itemKey].qty += qty;
+    else cart[itemKey] = { ...currentItem, qty, note };
+    addModal.hide();
+    if (q("#itemNote")) q("#itemNote").value = ""; // reset catatan
+    updateCartUI();
+    if (typeof showNotification === "function")
+      showNotification("Item added to cart", "success");
+    else console.log("Added to cart:", currentItem.name, "x", qty);
+  });
+
+  // Checkout
+  q("#checkoutBtn").addEventListener("click", function () {
+    const keys = Object.keys(cart);
+    if (keys.length === 0) {
+      if (typeof showNotification === "function")
+        showNotification("Keranjang kosong", "error");
+      else alert("Keranjang kosong");
+      return;
+    }
+    let summary = "Order Summary:\n";
+    let total = 0;
+    keys.forEach((k) => {
+      const it = cart[k];
+      summary += `${it.name} x ${it.qty} = ${formatCurrency(
+        it.price * it.qty
+      )}${it.note ? " (Catatan: " + it.note + ")" : ""}\n`;
+      total += it.price * it.qty;
+    });
+    total *= 1 - discount;
+    summary += "\nTotal: " + formatCurrency(total);
+    if (confirm(summary + "\n\nKonfirmasi checkout?")) {
+      if (typeof showNotification === "function")
+        showNotification("Checkout sukses — terima kasih!", "success");
+      else alert("Checkout sukses — terima kasih!");
+      for (const k of Object.keys(cart)) delete cart[k];
+      updateCartUI();
+      closeCart();
+    }
+  });
+
+  // Initial render
+  updateCartUI();
+
+  /* -------------------------
+       Newsletter signup simple handling
+       ------------------------- */
+  const newsletterForm = q(".newsletter-form");
+  if (newsletterForm) {
+    const input = q(".newsletter-input", newsletterForm);
+    const btn = q(".btn-signup", newsletterForm);
+    if (btn && input) {
+      btn.addEventListener("click", function () {
+        const value = input.value.trim();
+        if (!value || !isValidEmail(value)) {
+          showNotification("Please enter a valid email address.", "error");
+          return;
+        }
+        console.log("Newsletter signup:", value);
+        showNotification("Thanks for subscribing!", "success");
+        input.value = "";
+      });
+    }
+  }
+
+  /* -------------------------
+       Utilities: notifications & email validation
+       ------------------------- */
+  function showNotification(message, type) {
+    const colors = { success: "#2e7d32", error: "#c62828" };
+    const bg = colors[type] || "#333";
+    const el = document.createElement("div");
+    el.className = "notification";
+    el.style.position = "fixed";
+    el.style.right = "20px";
+    el.style.top = "90px";
+    el.style.zIndex = "2000";
+    el.style.minWidth = "280px";
+    el.style.padding = "12px 16px";
+    el.style.borderRadius = "8px";
+    el.style.background = bg;
+    el.style.color = "#fff";
+    el.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)";
+    el.style.display = "flex";
+    el.style.justifyContent = "space-between";
+    el.style.alignItems = "center";
+    el.style.gap = "12px";
+    el.innerHTML = `<div style="flex:1; font-size:14px">${message}</div>
+                        <button aria-label="close" style="background:transparent;border:0;color:#fff;font-size:18px;cursor:pointer">×</button>`;
+    const btn = el.querySelector("button");
+    btn.addEventListener("click", function () {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    });
+    document.body.appendChild(el);
+    setTimeout(() => {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 5000);
+  }
+
+  function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
+
+  /* -------------------------
+       Footer current year
+       ------------------------- */
+  const y = new Date().getFullYear();
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = y.toString();
+
+  // mark body loaded
+  window.addEventListener("load", function () {
+    document.body.classList.add("loaded");
+  });
+
+  /* -------------------------
+   Testimonials slider
+------------------------- */
+  const testimonialViewport = q(".testimonial-viewport");
+  const testimonialTrack = q(".testimonial-track");
+  const testimonialItems = qa(".testimonial-item");
+  const prevBtn = q(".prev-btn");
+  const nextBtn = q(".next-btn");
+
+  let currentTestimonial = 0;
+
+  function updateTestimonialPosition() {
+    if (
+      !testimonialTrack ||
+      testimonialItems.length === 0 ||
+      !testimonialViewport
+    )
+      return;
+    const viewportWidth = testimonialViewport.clientWidth;
+    const itemWidth =
+      testimonialItems[0].offsetWidth +
+      parseFloat(getComputedStyle(testimonialItems[0]).marginRight || 16);
+    const maxIndex = Math.max(
+      0,
+      testimonialItems.length - Math.floor(viewportWidth / itemWidth)
+    );
+    if (currentTestimonial > maxIndex) currentTestimonial = maxIndex;
+    testimonialTrack.style.transform = `translateX(-${
+      currentTestimonial * itemWidth
+    }px)`;
+    testimonialTrack.style.transition = "transform 0.3s ease";
+  }
+
+  if (prevBtn)
+    prevBtn.addEventListener("click", () => {
+      currentTestimonial = Math.max(0, currentTestimonial - 1);
+      updateTestimonialPosition();
+    });
+
+  if (nextBtn)
+    nextBtn.addEventListener("click", () => {
+      const maxIndex = Math.max(0, testimonialItems.length - 1);
+      currentTestimonial = Math.min(maxIndex, currentTestimonial + 1);
+      updateTestimonialPosition();
+    });
+
+  window.addEventListener("resize", updateTestimonialPosition);
+  updateTestimonialPosition();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Basic helpers
+  const q = (s, p = document) => p.querySelector(s);
+  const qa = (s, p = document) =>
+    Array.from((p || document).querySelectorAll(s));
+
+  // Cart data
+  const cart = {}; // id -> {id,name,price,img,qty}
+  const cartCountEl = q("#cartCount");
+  const cartSidebar = q("#cartSidebar");
+  const floatingCart = q("#floatingCart");
+  const cartItemsEl = q("#cartItems");
+  const cartTotalEl = q("#cartTotal");
+
+  function formatCurrency(v) {
+    return "$" + Number(v).toFixed(2);
+  }
+
+  function updateCartUI() {
+    const keys = Object.keys(cart);
+    let total = 0;
+    let qty = 0;
+    cartItemsEl.innerHTML = "";
+    keys.forEach((id) => {
+      const it = cart[id];
+      const sub = it.price * it.qty;
+      total += sub;
+      qty += it.qty;
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+              <img src="${it.img}" alt="${it.name}">
+              <div class="meta">
+                <strong>${it.name}</strong>
+                <small>${formatCurrency(it.price)} x ${
+        it.qty
+      } = ${formatCurrency(sub)}</small>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+                <div class="qty-controls">
+                  <button class="btn-decr" data-id="${id}">-</button>
+                  <span style="min-width:28px; text-align:center;">${
+                    it.qty
+                  }</span>
+                  <button class="btn-incr" data-id="${id}">+</button>
+                </div>
+                <button class="btn btn-sm btn-link text-danger remove-item" data-id="${id}">Remove</button>
+              </div>
+            `;
+      cartItemsEl.appendChild(div);
+    });
+    cartTotalEl.textContent = formatCurrency(total);
+    if (qty > 0) {
+      cartCountEl.style.display = "flex";
+      cartCountEl.textContent = qty;
+    } else cartCountEl.style.display = "none";
+    // bind buttons
+    qa(".btn-decr").forEach(
+      (b) =>
+        (b.onclick = () => {
+          changeQty(b.dataset.id, -1);
+        })
+    );
+    qa(".btn-incr").forEach(
+      (b) =>
+        (b.onclick = () => {
+          changeQty(b.dataset.id, +1);
+        })
+    );
+    qa(".remove-item").forEach(
+      (b) =>
+        (b.onclick = () => {
+          removeItem(b.dataset.id);
+        })
+    );
+  }
+
+  function changeQty(id, delta) {
+    if (!cart[id]) return;
+    cart[id].qty = Math.max(1, cart[id].qty + delta);
+    updateCartUI();
+  }
+  function removeItem(id) {
+    delete cart[id];
+    updateCartUI();
+  }
 })
